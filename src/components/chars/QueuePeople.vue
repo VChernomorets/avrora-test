@@ -70,22 +70,22 @@ export default {
         }
       },
       dataChart: {
-        labels: Object.keys(this.data),
+        labels: [],
         datasets: [
           {
             label: 'Минимум',
             backgroundColor: 'red',
-            data: [40, 39, 10, 40, 39, 80, 40]
+            data: []
           },
           {
             label: 'Среднее',
             backgroundColor: 'green',
-            data: [40, 39, 10, 40, 39, 80, 40]
+            data: []
           },
           {
             label: 'Максимум',
             backgroundColor: 'blue',
-            data: [20, 10, 12, 33, 22, 4, 0, 2]
+            data: []
           }
         ]
       },
@@ -118,13 +118,13 @@ export default {
     },
     groupData(data) {
       let result = this.fillEmptyArray(this.startTime, this.endTime).slice();
-      if(this.skip){
+      if (this.skip) {
         data = this.skipGroup(data).slice();
       }
 
       data.forEach(item => {
         let index = Math.floor((this.convertDateToMinutes(item.time) - this.convertTimeToMinutes(this.startTime)) / this.step);
-        if(result[index]){
+        if (result[index]) {
           result[index].data.push(item);
         }
       });
@@ -155,17 +155,17 @@ export default {
       data.forEach(item => {
 
         let time = this.convertTimeToSeconds(item.time.split(' ')[1]);
-        while ((time - nextTick) > 10 ){
-          if(groupItems.length !== 0){
+        while ((time - nextTick) > 10) {
+          if (groupItems.length !== 0) {
             count++;
           }
           nextTick += 10;
         }
-        if(item.num >= 2){
+        if (item.num >= 2) {
           groupItems.push(item);
           count++;
         } else {
-          if(count >= 6){
+          if (count >= 6) {
             newArray = newArray.concat(groupItems);
           }
           groupItems = [];
@@ -173,9 +173,6 @@ export default {
         }
         nextTick += 10;
       })
-
-      console.log(groupItems)
-      console.log(newArray)
       return newArray;
     },
     convertDateToMinutes: function (date) {
